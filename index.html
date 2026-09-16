@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Nikhith BS - Portfolio</title>
+  <title>Nikhith BS — Portfolio</title>
   
   <!-- Google Fonts & FontAwesome Icons -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -13,25 +13,24 @@
 
   <style>
     /* ==========================================================================
-       CSS Variables & Royal Palette Theme
+       1. CSS Variables & Royal Theme Palette
        ========================================================================== */
     :root {
-      --royal-blue: #1e40af;
-      --royal-blue-hover: #1d4ed8;
-      --deep-navy: #0f172a;
-      --navy-card: #1e293b;
+      --bg-dark: #0b1120;
+      --bg-card: rgba(30, 41, 59, 0.7);
+      --bg-card-hover: rgba(30, 41, 59, 0.95);
+      --royal-blue: #2563eb;
+      --royal-blue-glow: rgba(37, 99, 235, 0.35);
       --violet-accent: #7c3aed;
-      --violet-light: #f3e8ff;
-      --text-dark: #0f172a;
-      --text-muted: #475569;
-      --bg-body: #f8fafc;
-      --bg-card: #ffffff;
-      --border-color: #cbd5e1;
-      --shadow-sm: 0 2px 4px 0 rgb(15 23 42 / 0.05);
-      --shadow-md: 0 6px 16px -2px rgb(15 23 42 / 0.08);
-      --shadow-lg: 0 12px 28px -4px rgb(15 23 42 / 0.12);
+      --violet-glow: rgba(124, 58, 237, 0.35);
+      --text-main: #f8fafc;
+      --text-muted: #94a3b8;
+      --border-light: rgba(255, 255, 255, 0.08);
+      --border-accent: rgba(59, 130, 246, 0.3);
+      --radius-sm: 8px;
+      --radius-md: 14px;
+      --radius-lg: 20px;
       --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-      --radius: 12px;
     }
 
     * {
@@ -46,9 +45,10 @@
 
     body {
       font-family: 'Plus Jakarta Sans', sans-serif;
-      background-color: var(--bg-body);
-      color: var(--text-dark);
+      background-color: var(--bg-dark);
+      color: var(--text-main);
       line-height: 1.65;
+      overflow-x: hidden;
       -webkit-font-smoothing: antialiased;
     }
 
@@ -62,55 +62,93 @@
     }
 
     .container {
-      max-width: 1100px;
+      max-width: 1120px;
       margin: 0 auto;
       padding: 0 1.5rem;
     }
 
+    /* Preloader */
+    #preloader {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100vh;
+      background-color: var(--bg-dark);
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      z-index: 9999;
+      transition: opacity 0.5s ease, visibility 0.5s ease;
+    }
+
+    .loader-spinner {
+      width: 48px;
+      height: 48px;
+      border: 3px solid rgba(255, 255, 255, 0.1);
+      border-radius: 50%;
+      border-top-color: var(--royal-blue);
+      border-right-color: var(--violet-accent);
+      animation: spin 0.8s linear infinite;
+      margin-bottom: 1rem;
+    }
+
+    @keyframes spin {
+      to { transform: rotate(360deg); }
+    }
+
+    /* ==========================================================================
+       2. Typography & Section Headers
+       ========================================================================== */
+    .section-header {
+      margin-bottom: 3rem;
+      text-align: center;
+    }
+
     .section-title {
-      font-size: 2.1rem;
+      font-size: 2.25rem;
       font-weight: 800;
-      color: var(--deep-navy);
-      margin-bottom: 0.5rem;
+      color: var(--text-main);
       position: relative;
       display: inline-block;
+      letter-spacing: -0.5px;
     }
 
     .section-title::after {
       content: '';
       position: absolute;
-      width: 45%;
+      width: 60%;
       height: 4px;
       background: linear-gradient(90deg, var(--royal-blue), var(--violet-accent));
-      bottom: -6px;
-      left: 0;
+      bottom: -8px;
+      left: 20%;
       border-radius: 2px;
-    }
-
-    .section-header {
-      margin-bottom: 2.5rem;
     }
 
     .section-subtitle {
       color: var(--text-muted);
       font-size: 0.98rem;
+      margin-top: 0.8rem;
     }
 
     section {
-      padding: 5rem 0;
+      padding: 5.5rem 0;
+      position: relative;
     }
 
     /* ==========================================================================
-       Header & Navigation
+       3. Header & Navigation
        ========================================================================== */
     header {
       position: fixed;
       top: 0;
       left: 0;
       width: 100%;
-      background: rgba(15, 23, 42, 0.92);
-      backdrop-filter: blur(12px);
-      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+      background: rgba(11, 17, 32, 0.85);
+      backdrop-filter: blur(14px);
+      -webkit-backdrop-filter: blur(14px);
+      border-bottom: 1px solid var(--border-light);
       z-index: 1000;
       transition: var(--transition);
     }
@@ -119,7 +157,7 @@
       display: flex;
       justify-content: space-between;
       align-items: center;
-      height: 70px;
+      height: 72px;
     }
 
     .logo {
@@ -144,24 +182,36 @@
     .nav-link {
       font-size: 0.9rem;
       font-weight: 500;
-      color: #cbd5e1;
+      color: var(--text-muted);
       transition: var(--transition);
-      padding: 0.4rem 0.6rem;
-      border-radius: 6px;
+      padding: 0.4rem 0.75rem;
+      border-radius: var(--radius-sm);
+      position: relative;
     }
 
-    .nav-link:hover {
-      color: #ffffff;
-      background: rgba(255, 255, 255, 0.08);
+    .nav-link:hover, .nav-link.active {
+      color: var(--text-main);
+      background: rgba(255, 255, 255, 0.05);
+    }
+
+    .nav-link.active::after {
+      content: '';
+      position: absolute;
+      bottom: -2px;
+      left: 15%;
+      width: 70%;
+      height: 2px;
+      background: var(--royal-blue);
+      border-radius: 2px;
     }
 
     .nav-resume-btn {
       background: linear-gradient(135deg, var(--royal-blue), var(--violet-accent));
       color: #ffffff !important;
       font-weight: 600;
-      padding: 0.45rem 1rem;
-      border-radius: 6px;
-      box-shadow: 0 2px 8px rgba(30, 64, 175, 0.3);
+      padding: 0.45rem 1.1rem;
+      border-radius: var(--radius-sm);
+      box-shadow: 0 4px 14px var(--royal-blue-glow);
     }
 
     .nav-resume-btn:hover {
@@ -177,111 +227,141 @@
     }
 
     /* ==========================================================================
-       Buttons & Badges
+       4. Buttons & Badges
        ========================================================================== */
     .btn {
       display: inline-flex;
       align-items: center;
-      gap: 0.55rem;
+      gap: 0.6rem;
       padding: 0.75rem 1.6rem;
       font-size: 0.95rem;
       font-weight: 600;
-      border-radius: 8px;
+      border-radius: var(--radius-sm);
       transition: var(--transition);
       cursor: pointer;
       border: none;
     }
 
     .btn-primary {
-      background: linear-gradient(135deg, var(--royal-blue) 0%, var(--violet-accent) 100%);
+      background: linear-gradient(135deg, var(--royal-blue), var(--violet-accent));
       color: #ffffff;
-      box-shadow: 0 4px 14px rgba(30, 64, 175, 0.25);
+      box-shadow: 0 4px 16px var(--royal-blue-glow);
     }
 
     .btn-primary:hover {
       transform: translateY(-2px);
-      box-shadow: 0 6px 20px rgba(124, 58, 237, 0.35);
+      box-shadow: 0 6px 24px var(--violet-glow);
     }
 
-    .btn-secondary {
-      background-color: var(--bg-card);
-      color: var(--deep-navy);
-      border: 1px solid var(--border-color);
-      box-shadow: var(--shadow-sm);
+    .btn-outline {
+      background-color: rgba(255, 255, 255, 0.03);
+      color: var(--text-main);
+      border: 1px solid var(--border-light);
     }
 
-    .btn-secondary:hover {
-      background-color: #ffffff;
+    .btn-outline:hover {
+      background-color: rgba(255, 255, 255, 0.08);
       border-color: var(--royal-blue);
-      color: var(--royal-blue);
-      transform: translateY(-2px);
-      box-shadow: var(--shadow-md);
-    }
-
-    .btn-outline-white {
-      background-color: rgba(255, 255, 255, 0.05);
-      color: #ffffff;
-      border: 1px solid rgba(255, 255, 255, 0.2);
-    }
-
-    .btn-outline-white:hover {
-      background-color: rgba(255, 255, 255, 0.15);
-      border-color: #ffffff;
       transform: translateY(-2px);
     }
 
-    .badge {
-      display: inline-block;
-      padding: 0.3rem 0.8rem;
-      background-color: var(--violet-light);
-      color: var(--violet-accent);
-      font-size: 0.8rem;
+    .status-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0.35rem 0.9rem;
+      background: rgba(37, 99, 235, 0.12);
+      border: 1px solid rgba(59, 130, 246, 0.3);
+      color: #93c5fd;
+      font-size: 0.82rem;
       font-weight: 600;
       border-radius: 50px;
+      margin-bottom: 1.25rem;
+    }
+
+    .status-dot {
+      width: 8px;
+      height: 8px;
+      background-color: #22c55e;
+      border-radius: 50%;
+      box-shadow: 0 0 8px #22c55e;
+      animation: pulse 2s infinite;
+    }
+
+    @keyframes pulse {
+      0% { opacity: 1; transform: scale(1); }
+      50% { opacity: 0.4; transform: scale(1.2); }
+      100% { opacity: 1; transform: scale(1); }
     }
 
     /* ==========================================================================
-       1. Hero Section
+       5. Hero Section
        ========================================================================== */
     .hero {
-      padding-top: 10rem;
-      padding-bottom: 6.5rem;
-      background: linear-gradient(180deg, var(--deep-navy) 0%, #1e1b4b 100%);
-      color: #ffffff;
+      padding-top: 10.5rem;
+      padding-bottom: 6rem;
+      background: radial-gradient(circle at 50% 20%, rgba(30, 58, 138, 0.25) 0%, rgba(11, 17, 32, 1) 70%);
+      overflow: hidden;
       position: relative;
+    }
+
+    .hero-bg-glow {
+      position: absolute;
+      width: 400px;
+      height: 400px;
+      background: linear-gradient(135deg, var(--royal-blue), var(--violet-accent));
+      filter: blur(150px);
+      opacity: 0.18;
+      top: 10%;
+      right: 10%;
+      pointer-events: none;
+      border-radius: 50%;
     }
 
     .hero-content {
       max-width: 820px;
+      position: relative;
+      z-index: 2;
     }
 
     .hero-greeting {
       color: #93c5fd;
       font-weight: 600;
-      font-size: 1.05rem;
-      margin-bottom: 0.6rem;
-      letter-spacing: 0.5px;
+      font-size: 1.1rem;
+      margin-bottom: 0.4rem;
     }
 
     .hero-title {
-      font-size: 3.25rem;
+      font-size: 3.5rem;
       font-weight: 800;
       line-height: 1.15;
       color: #ffffff;
-      margin-bottom: 0.6rem;
-      letter-spacing: -0.5px;
+      margin-bottom: 0.8rem;
+      letter-spacing: -1px;
     }
 
-    .hero-subtitle {
-      font-size: 1.3rem;
-      font-weight: 500;
-      color: #cbd5e1;
+    .hero-typewriter-container {
+      font-size: 1.35rem;
+      font-weight: 600;
+      color: var(--text-muted);
       margin-bottom: 1.5rem;
+      min-height: 38px;
+    }
+
+    .typewriter-text {
+      color: #60a5fa;
+      border-right: 2px solid var(--royal-blue);
+      animation: blink 0.75s step-end infinite;
+    }
+
+    @keyframes blink {
+      from, to { border-color: transparent }
+      50% { border-color: var(--royal-blue); }
     }
 
     .hero-description {
       font-size: 1.05rem;
-      color: #94a3b8;
+      color: var(--text-muted);
       margin-bottom: 2.2rem;
       max-width: 680px;
       line-height: 1.8;
@@ -294,14 +374,22 @@
     }
 
     /* ==========================================================================
-       2. About Me Section
+       6. Interactive About Section & Stats
        ========================================================================== */
+    .about-grid {
+      display: grid;
+      grid-template-columns: 1.2fr 1fr;
+      gap: 2rem;
+      align-items: center;
+    }
+
     .about-card {
-      background-color: var(--bg-card);
-      border: 1px solid var(--border-color);
-      border-radius: var(--radius);
+      background: var(--bg-card);
+      backdrop-filter: blur(12px);
+      border: 1px solid var(--border-light);
+      border-radius: var(--radius-lg);
       padding: 2.5rem;
-      box-shadow: var(--shadow-sm);
+      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
       position: relative;
     }
 
@@ -313,22 +401,62 @@
       width: 4px;
       height: 100%;
       background: linear-gradient(180deg, var(--royal-blue), var(--violet-accent));
-      border-radius: 12px 0 0 12px;
+      border-radius: var(--radius-lg) 0 0 var(--radius-lg);
     }
 
     .about-text p {
       color: var(--text-muted);
-      font-size: 1.05rem;
+      font-size: 1.02rem;
       line-height: 1.85;
-      margin-bottom: 1rem;
+      margin-bottom: 1.1rem;
     }
 
     .about-text p:last-child {
       margin-bottom: 0;
     }
 
+    .stats-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 1.1rem;
+    }
+
+    .stat-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border-light);
+      border-radius: var(--radius-md);
+      padding: 1.5rem;
+      text-align: center;
+      transition: var(--transition);
+    }
+
+    .stat-card:hover {
+      transform: translateY(-4px);
+      border-color: var(--border-accent);
+      background: var(--bg-card-hover);
+    }
+
+    .stat-icon {
+      font-size: 1.8rem;
+      color: #60a5fa;
+      margin-bottom: 0.6rem;
+    }
+
+    .stat-number {
+      font-size: 1.25rem;
+      font-weight: 800;
+      color: var(--text-main);
+      margin-bottom: 0.2rem;
+    }
+
+    .stat-label {
+      font-size: 0.85rem;
+      color: var(--text-muted);
+      font-weight: 500;
+    }
+
     /* ==========================================================================
-       3. Education Section
+       7. Education Section
        ========================================================================== */
     .education-list {
       display: flex;
@@ -337,11 +465,11 @@
     }
 
     .education-card {
-      background-color: var(--bg-card);
-      border: 1px solid var(--border-color);
-      border-radius: var(--radius);
-      padding: 2.25rem;
-      box-shadow: var(--shadow-sm);
+      background: var(--bg-card);
+      backdrop-filter: blur(12px);
+      border: 1px solid var(--border-light);
+      border-radius: var(--radius-md);
+      padding: 2rem 2.25rem;
       display: flex;
       justify-content: space-between;
       align-items: flex-start;
@@ -351,20 +479,21 @@
     }
 
     .education-card:hover {
-      box-shadow: var(--shadow-md);
       border-color: var(--royal-blue);
+      transform: translateY(-2px);
+      box-shadow: 0 8px 24px var(--royal-blue-glow);
     }
 
     .edu-degree {
-      font-size: 1.3rem;
+      font-size: 1.25rem;
       font-weight: 700;
-      color: var(--deep-navy);
+      color: var(--text-main);
       margin-bottom: 0.35rem;
     }
 
     .edu-institution {
-      font-size: 1.05rem;
-      color: var(--royal-blue);
+      font-size: 1rem;
+      color: #60a5fa;
       font-weight: 600;
       margin-bottom: 0.5rem;
     }
@@ -373,7 +502,7 @@
       display: flex;
       gap: 1rem;
       flex-wrap: wrap;
-      font-size: 0.9rem;
+      font-size: 0.88rem;
       color: var(--text-muted);
     }
 
@@ -384,17 +513,17 @@
     }
 
     .edu-year {
-      background: linear-gradient(135deg, rgba(30, 64, 175, 0.1), rgba(124, 58, 237, 0.1));
-      color: var(--royal-blue);
-      border: 1px solid rgba(30, 64, 175, 0.2);
-      padding: 0.45rem 1.1rem;
+      background: rgba(37, 99, 235, 0.12);
+      color: #93c5fd;
+      border: 1px solid rgba(59, 130, 246, 0.25);
+      padding: 0.4rem 1rem;
       border-radius: 50px;
-      font-size: 0.88rem;
+      font-size: 0.85rem;
       font-weight: 700;
     }
 
     /* ==========================================================================
-       4. Technical Skills Section
+       8. Interactive Skills Section
        ========================================================================== */
     .skills-grid {
       display: grid;
@@ -403,23 +532,23 @@
     }
 
     .skill-card {
-      background-color: var(--bg-card);
-      border: 1px solid var(--border-color);
-      border-radius: var(--radius);
+      background: var(--bg-card);
+      backdrop-filter: blur(12px);
+      border: 1px solid var(--border-light);
+      border-radius: var(--radius-md);
       padding: 1.85rem;
-      box-shadow: var(--shadow-sm);
       transition: var(--transition);
     }
 
     .skill-card:hover {
       transform: translateY(-4px);
-      box-shadow: var(--shadow-md);
       border-color: var(--violet-accent);
+      box-shadow: 0 8px 24px var(--violet-glow);
     }
 
     .skill-icon {
-      font-size: 1.9rem;
-      color: var(--royal-blue);
+      font-size: 2rem;
+      color: #60a5fa;
       margin-bottom: 1rem;
     }
 
@@ -427,7 +556,7 @@
       font-size: 1.15rem;
       font-weight: 700;
       margin-bottom: 1rem;
-      color: var(--deep-navy);
+      color: var(--text-main);
     }
 
     .skill-list {
@@ -437,60 +566,68 @@
     }
 
     .skill-tag {
-      background-color: var(--bg-body);
-      border: 1px solid var(--border-color);
-      color: var(--deep-navy);
-      padding: 0.35rem 0.8rem;
+      background: rgba(255, 255, 255, 0.04);
+      border: 1px solid var(--border-light);
+      color: #cbd5e1;
+      padding: 0.35rem 0.85rem;
       border-radius: 6px;
       font-size: 0.85rem;
       font-weight: 600;
+      transition: var(--transition);
+    }
+
+    .skill-card:hover .skill-tag {
+      border-color: rgba(124, 58, 237, 0.4);
     }
 
     /* ==========================================================================
-       5. Projects Section
+       9. Unique Projects Section
        ========================================================================== */
     .projects-grid {
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
-      gap: 1.5rem;
+      gap: 1.75rem;
     }
 
     .project-card {
-      background-color: var(--bg-card);
-      border: 1px solid var(--border-color);
-      border-radius: var(--radius);
+      background: var(--bg-card);
+      backdrop-filter: blur(12px);
+      border: 1px solid var(--border-light);
+      border-radius: var(--radius-lg);
       padding: 2.25rem;
-      box-shadow: var(--shadow-sm);
       display: flex;
       flex-direction: column;
       justify-content: space-between;
       transition: var(--transition);
+      position: relative;
+      overflow: hidden;
     }
 
     .project-card:hover {
-      transform: translateY(-4px);
-      box-shadow: var(--shadow-md);
+      transform: translateY(-6px);
       border-color: var(--royal-blue);
+      box-shadow: 0 12px 32px var(--royal-blue-glow);
     }
 
-    .project-status-badge {
+    .project-badge {
       display: inline-flex;
       align-items: center;
       gap: 0.4rem;
-      font-size: 0.75rem;
+      font-size: 0.78rem;
       font-weight: 700;
-      color: var(--royal-blue);
-      background-color: var(--violet-light);
-      padding: 0.25rem 0.65rem;
-      border-radius: 4px;
-      margin-bottom: 1rem;
+      color: #93c5fd;
+      background: rgba(37, 99, 235, 0.15);
+      border: 1px solid rgba(59, 130, 246, 0.3);
+      padding: 0.25rem 0.75rem;
+      border-radius: 50px;
+      margin-bottom: 1.1rem;
       width: fit-content;
     }
 
     .project-title {
-      font-size: 1.3rem;
+      font-size: 1.35rem;
       font-weight: 700;
-      color: var(--deep-navy);
+      color: var(--text-main);
       margin-bottom: 0.75rem;
     }
 
@@ -498,7 +635,7 @@
       color: var(--text-muted);
       font-size: 0.95rem;
       line-height: 1.7;
-      margin-bottom: 1.5rem;
+      margin-bottom: 1.6rem;
       flex-grow: 1;
     }
 
@@ -508,61 +645,117 @@
       flex-wrap: wrap;
     }
 
-    /* ==========================================================================
-       6. What I Am Learning Section
-       ========================================================================== */
-    .learning-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
-      gap: 1.15rem;
+    .project-tag {
+      font-size: 0.78rem;
+      font-weight: 600;
+      padding: 0.25rem 0.7rem;
+      background: rgba(124, 58, 237, 0.15);
+      color: #c084fc;
+      border-radius: 4px;
     }
 
-    .learning-item {
-      background-color: var(--bg-card);
-      border: 1px solid var(--border-color);
-      border-radius: var(--radius);
+    /* ==========================================================================
+       10. Learning Journey / Roadmap Section
+       ========================================================================== */
+    .timeline {
+      position: relative;
+      max-width: 800px;
+      margin: 0 auto;
+    }
+
+    .timeline::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      left: 50%;
+      width: 2px;
+      background: linear-gradient(180deg, var(--royal-blue), var(--violet-accent));
+      transform: translateX(-50%);
+    }
+
+    .timeline-item {
+      position: relative;
+      margin-bottom: 2.5rem;
+      width: 50%;
+      padding: 0 2rem;
+    }
+
+    .timeline-item:nth-child(odd) {
+      left: 0;
+      text-align: right;
+    }
+
+    .timeline-item:nth-child(even) {
+      left: 50%;
+      text-align: left;
+    }
+
+    .timeline-dot {
+      position: absolute;
+      top: 15px;
+      width: 16px;
+      height: 16px;
+      background-color: var(--bg-dark);
+      border: 3px solid var(--royal-blue);
+      border-radius: 50%;
+      z-index: 2;
+    }
+
+    .timeline-item:nth-child(odd) .timeline-dot {
+      right: -8px;
+    }
+
+    .timeline-item:nth-child(even) .timeline-dot {
+      left: -8px;
+    }
+
+    .timeline-content {
+      background: var(--bg-card);
+      backdrop-filter: blur(12px);
+      border: 1px solid var(--border-light);
+      border-radius: var(--radius-md);
       padding: 1.25rem 1.5rem;
-      display: flex;
-      align-items: center;
-      gap: 0.85rem;
-      box-shadow: var(--shadow-sm);
+      display: inline-block;
       transition: var(--transition);
     }
 
-    .learning-item:hover {
+    .timeline-content:hover {
       border-color: var(--violet-accent);
       transform: translateY(-2px);
     }
 
-    .learning-item i {
-      color: var(--violet-accent);
-      font-size: 1.15rem;
+    .timeline-step {
+      font-size: 0.78rem;
+      font-weight: 700;
+      color: #60a5fa;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      margin-bottom: 0.2rem;
     }
 
-    .learning-item span {
-      font-weight: 600;
-      font-size: 0.95rem;
-      color: var(--deep-navy);
+    .timeline-title {
+      font-size: 1.05rem;
+      font-weight: 700;
+      color: var(--text-main);
     }
 
     /* ==========================================================================
-       7. Career Objective
+       11. Career Objective Section
        ========================================================================== */
     .objective-card {
-      background: linear-gradient(135deg, var(--deep-navy) 0%, #1e1b4b 100%);
-      color: #ffffff;
-      border-radius: var(--radius);
-      padding: 2.75rem;
+      background: linear-gradient(135deg, rgba(30, 41, 59, 0.9), rgba(15, 23, 42, 0.95));
+      border: 1px solid var(--border-light);
+      border-radius: var(--radius-lg);
+      padding: 2.5rem;
       position: relative;
-      overflow: hidden;
-      box-shadow: var(--shadow-md);
-      border: 1px solid rgba(255, 255, 255, 0.1);
+      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
     }
 
     .objective-card h3 {
       font-size: 1.35rem;
       font-weight: 700;
-      margin-bottom: 1rem;
+      margin-bottom: 0.8rem;
       color: #ffffff;
       display: flex;
       align-items: center;
@@ -574,14 +767,13 @@
     }
 
     .objective-card p {
-      font-size: 1.08rem;
+      font-size: 1.05rem;
       line-height: 1.85;
-      color: #cbd5e1;
-      max-width: 880px;
+      color: var(--text-muted);
     }
 
     /* ==========================================================================
-       8. Contact Section
+       12. Contact Section
        ========================================================================== */
     .contact-grid {
       display: grid;
@@ -590,11 +782,11 @@
     }
 
     .contact-info {
-      background-color: var(--bg-card);
-      border: 1px solid var(--border-color);
-      border-radius: var(--radius);
+      background: var(--bg-card);
+      backdrop-filter: blur(12px);
+      border: 1px solid var(--border-light);
+      border-radius: var(--radius-lg);
       padding: 2.25rem;
-      box-shadow: var(--shadow-sm);
     }
 
     .contact-item {
@@ -611,9 +803,9 @@
     .contact-icon {
       width: 44px;
       height: 44px;
-      background: linear-gradient(135deg, rgba(30, 64, 175, 0.1), rgba(124, 58, 237, 0.1));
-      color: var(--royal-blue);
-      border-radius: 8px;
+      background: rgba(37, 99, 235, 0.15);
+      color: #60a5fa;
+      border-radius: var(--radius-sm);
       display: flex;
       align-items: center;
       justify-content: center;
@@ -622,7 +814,7 @@
     }
 
     .contact-details h4 {
-      font-size: 0.82rem;
+      font-size: 0.8rem;
       color: var(--text-muted);
       text-transform: uppercase;
       letter-spacing: 0.5px;
@@ -633,21 +825,21 @@
     .contact-details p, .contact-details a {
       font-size: 0.98rem;
       font-weight: 600;
-      color: var(--deep-navy);
+      color: var(--text-main);
       transition: var(--transition);
       word-break: break-all;
     }
 
     .contact-details a:hover {
-      color: var(--violet-accent);
+      color: #60a5fa;
     }
 
     .contact-form-container {
-      background-color: var(--bg-card);
-      border: 1px solid var(--border-color);
-      border-radius: var(--radius);
+      background: var(--bg-card);
+      backdrop-filter: blur(12px);
+      border: 1px solid var(--border-light);
+      border-radius: var(--radius-lg);
       padding: 2.25rem;
-      box-shadow: var(--shadow-sm);
     }
 
     .form-group {
@@ -656,28 +848,28 @@
 
     .form-group label {
       display: block;
-      font-size: 0.9rem;
+      font-size: 0.88rem;
       font-weight: 600;
-      margin-bottom: 0.5rem;
-      color: var(--deep-navy);
+      margin-bottom: 0.4rem;
+      color: var(--text-main);
     }
 
     .form-control {
       width: 100%;
       padding: 0.75rem 1rem;
-      border: 1px solid var(--border-color);
-      border-radius: 8px;
+      background: rgba(15, 23, 42, 0.6);
+      border: 1px solid var(--border-light);
+      border-radius: var(--radius-sm);
+      color: #ffffff;
       font-family: inherit;
       font-size: 0.95rem;
       transition: var(--transition);
-      background-color: var(--bg-body);
     }
 
     .form-control:focus {
       outline: none;
       border-color: var(--royal-blue);
-      background-color: #ffffff;
-      box-shadow: 0 0 0 3px rgba(30, 64, 175, 0.15);
+      box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.25);
     }
 
     textarea.form-control {
@@ -689,7 +881,7 @@
       display: none;
       margin-top: 1rem;
       padding: 0.85rem 1rem;
-      border-radius: 8px;
+      border-radius: var(--radius-sm);
       font-size: 0.9rem;
       font-weight: 600;
       align-items: center;
@@ -698,25 +890,55 @@
 
     .form-status.success {
       display: flex;
-      background-color: #f0fdf4;
-      border: 1px solid #86efac;
-      color: #166534;
+      background: rgba(34, 197, 94, 0.15);
+      border: 1px solid rgba(34, 197, 94, 0.3);
+      color: #4ade80;
     }
 
     .form-status.error {
       display: flex;
-      background-color: #fef2f2;
-      border: 1px solid #fca5a5;
-      color: #991b1b;
+      background: rgba(239, 68, 68, 0.15);
+      border: 1px solid rgba(239, 68, 68, 0.3);
+      color: #f87171;
     }
 
     /* ==========================================================================
-       9. Footer
+       13. Back to Top Button & Footer
        ========================================================================== */
-    footer {
-      background-color: var(--deep-navy);
+    #back-to-top {
+      position: fixed;
+      bottom: 30px;
+      right: 30px;
+      width: 44px;
+      height: 44px;
+      background: linear-gradient(135deg, var(--royal-blue), var(--violet-accent));
       color: #ffffff;
-      border-top: 1px solid rgba(255, 255, 255, 0.1);
+      border: none;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.1rem;
+      cursor: pointer;
+      box-shadow: 0 4px 16px var(--royal-blue-glow);
+      opacity: 0;
+      visibility: hidden;
+      transition: var(--transition);
+      z-index: 900;
+    }
+
+    #back-to-top.visible {
+      opacity: 1;
+      visibility: visible;
+    }
+
+    #back-to-top:hover {
+      transform: translateY(-3px);
+    }
+
+    footer {
+      background-color: #070a14;
+      border-top: 1px solid var(--border-light);
       padding: 2.5rem 0;
       text-align: center;
     }
@@ -737,12 +959,12 @@
       width: 40px;
       height: 40px;
       border-radius: 50%;
-      background-color: rgba(255, 255, 255, 0.08);
-      border: 1px solid rgba(255, 255, 255, 0.15);
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid var(--border-light);
       display: flex;
       align-items: center;
       justify-content: center;
-      color: #cbd5e1;
+      color: var(--text-muted);
       transition: var(--transition);
       font-size: 1.1rem;
     }
@@ -755,16 +977,48 @@
     }
 
     .copyright {
-      font-size: 0.9rem;
-      color: #94a3b8;
+      font-size: 0.88rem;
+      color: var(--text-muted);
+    }
+
+    /* Scroll Reveal Class */
+    .reveal {
+      opacity: 0;
+      transform: translateY(30px);
+      transition: all 0.8s ease;
+    }
+
+    .reveal.active {
+      opacity: 1;
+      transform: translateY(0);
     }
 
     /* ==========================================================================
-       Responsive Media Queries
+       14. Responsive Media Queries
        ========================================================================== */
     @media (max-width: 868px) {
-      .contact-grid {
+      .about-grid, .contact-grid {
         grid-template-columns: 1fr;
+      }
+
+      .timeline::before {
+        left: 20px;
+      }
+
+      .timeline-item {
+        width: 100%;
+        padding-left: 3rem;
+        padding-right: 0;
+        text-align: left !important;
+      }
+
+      .timeline-item:nth-child(even) {
+        left: 0;
+      }
+
+      .timeline-dot, .timeline-item:nth-child(odd) .timeline-dot, .timeline-item:nth-child(even) .timeline-dot {
+        left: 12px;
+        right: auto;
       }
     }
 
@@ -775,17 +1029,17 @@
 
       .nav-menu {
         position: fixed;
-        top: 70px;
+        top: 72px;
         left: -100%;
         width: 100%;
-        height: calc(100vh - 70px);
-        background-color: var(--deep-navy);
+        height: calc(100vh - 72px);
+        background-color: var(--bg-dark);
         flex-direction: column;
         align-items: center;
-        padding-top: 2.5rem;
-        gap: 1.5rem;
+        padding-top: 3rem;
+        gap: 1.75rem;
         transition: var(--transition);
-        border-top: 1px solid rgba(255, 255, 255, 0.1);
+        border-top: 1px solid var(--border-light);
       }
 
       .nav-menu.active {
@@ -793,11 +1047,7 @@
       }
 
       .hero-title {
-        font-size: 2.4rem;
-      }
-
-      .hero-subtitle {
-        font-size: 1.15rem;
+        font-size: 2.5rem;
       }
 
       .education-card {
@@ -808,49 +1058,63 @@
 </head>
 <body>
 
-  <!-- Header Navigation -->
+  <!-- Minimal Fast Preloader -->
+  <div id="preloader">
+    <div class="loader-spinner"></div>
+  </div>
+
+  <!-- Header & Sticky Navigation -->
   <header>
     <div class="container nav-container">
       <a href="#home" class="logo">Nikhith <span>BS</span></a>
       
-      <div class="hamburger" id="hamburger">
+      <div class="hamburger" id="hamburger" aria-label="Toggle navigation">
         <i class="fa-solid fa-bars"></i>
       </div>
 
       <nav>
         <ul class="nav-menu" id="nav-menu">
-          <li><a href="#home" class="nav-link">Home</a></li>
-          <li><a href="NIKHITH_RESUME.pdf" target="_blank" rel="noopener noreferrer" class="nav-link nav-resume-btn"><i class="fa-solid fa-file-pdf"></i> Resume</a></li>
+          <li><a href="#home" class="nav-link active">Home</a></li>
           <li><a href="#about" class="nav-link">About</a></li>
           <li><a href="#education" class="nav-link">Education</a></li>
           <li><a href="#skills" class="nav-link">Skills</a></li>
           <li><a href="#projects" class="nav-link">Projects</a></li>
-          <li><a href="#learning" class="nav-link">Learning</a></li>
+          <li><a href="#journey" class="nav-link">Journey</a></li>
           <li><a href="#contact" class="nav-link">Contact</a></li>
+          <li><a href="NIKHITH_RESUME.pdf" target="_blank" rel="noopener noreferrer" class="nav-link nav-resume-btn"><i class="fa-solid fa-file-pdf"></i> Resume</a></li>
         </ul>
       </nav>
     </div>
   </header>
 
   <main>
-    <!-- 1. Home / Hero Section -->
+    <!-- 1. Hero Section -->
     <section id="home" class="hero">
+      <div class="hero-bg-glow"></div>
       <div class="container">
-        <div class="hero-content">
-          <p class="hero-greeting">Hi there, I am</p>
+        <div class="hero-content reveal">
+          <div class="status-pill">
+            <span class="status-dot"></span> Available for Internship Opportunities
+          </div>
+          <p class="hero-greeting">Hi, my name is</p>
           <h1 class="hero-title">Nikhith BS</h1>
-          <h2 class="hero-subtitle">Third-Year Computer Science and Engineering Student</h2>
+          
+          <div class="hero-typewriter-container">
+            I am a <span class="typewriter-text" id="typewriter"></span>
+          </div>
+
           <p class="hero-description">
-            I am a Computer Science and Engineering student interested in programming, web development, and problem solving. I enjoy learning new technologies, building practical projects, and continuously improving my technical skills.
+            Third-year Computer Science and Engineering student at BMSIT, Bengaluru. Passionate about software development, programming fundamentals, core data structures, and building practical web applications.
           </p>
+
           <div class="hero-buttons">
             <a href="NIKHITH_RESUME.pdf" target="_blank" rel="noopener noreferrer" class="btn btn-primary">
               <i class="fa-solid fa-file-pdf"></i> View Resume
             </a>
-            <a href="#projects" class="btn btn-outline-white">
+            <a href="#projects" class="btn btn-outline">
               <i class="fa-solid fa-code"></i> View Projects
             </a>
-            <a href="#contact" class="btn btn-outline-white">
+            <a href="#contact" class="btn btn-outline">
               <i class="fa-regular fa-envelope"></i> Contact Me
             </a>
           </div>
@@ -858,20 +1122,50 @@
       </div>
     </section>
 
-    <!-- 2. About Me Section -->
+    <!-- 2. Interactive About Me Section -->
     <section id="about">
       <div class="container">
-        <div class="section-header">
+        <div class="section-header reveal">
           <h2 class="section-title">About Me</h2>
+          <p class="section-subtitle">A brief overview of my background and academic journey</p>
         </div>
-        <div class="about-card">
-          <div class="about-text">
-            <p>
-              I am a third-year Computer Science and Engineering student at <strong>BMS Institute of Technology and Management (BMSIT)</strong> in Bengaluru, India. I have a genuine interest in computer science fundamentals, software creation, and applying theoretical concepts to real-world applications.
-            </p>
-            <p>
-              My primary focus areas include programming in C, C++, and Python, exploring core data structures, and developing foundational web application skills. I aim to build practical software projects that strengthen my analytical thinking and problem-solving abilities.
-            </p>
+
+        <div class="about-grid">
+          <div class="about-card reveal">
+            <div class="about-text">
+              <p>
+                I am a third-year Computer Science and Engineering student at <strong>BMS Institute of Technology and Management (BMSIT)</strong> in Bengaluru, India.
+              </p>
+              <p>
+                My main technical interests lie in C, C++, and Python programming, Data Structures & Algorithms, and modern web application development. I focus on developing clean logic and applying core computer science principles to build functional learning projects.
+              </p>
+            </div>
+          </div>
+
+          <div class="stats-grid reveal">
+            <div class="stat-card">
+              <i class="fa-solid fa-graduation-cap stat-icon"></i>
+              <div class="stat-number">3rd Year</div>
+              <div class="stat-label">B.E. CSE Student</div>
+            </div>
+
+            <div class="stat-card">
+              <i class="fa-solid fa-code stat-icon"></i>
+              <div class="stat-number">3+ Core</div>
+              <div class="stat-label">C, C++, Python</div>
+            </div>
+
+            <div class="stat-card">
+              <i class="fa-solid fa-brain stat-icon"></i>
+              <div class="stat-number">DSA</div>
+              <div class="stat-label">Active Learning</div>
+            </div>
+
+            <div class="stat-card">
+              <i class="fa-solid fa-laptop-code stat-icon"></i>
+              <div class="stat-number">Web Dev</div>
+              <div class="stat-label">HTML, CSS, JS, Flask</div>
+            </div>
           </div>
         </div>
       </div>
@@ -880,13 +1174,13 @@
     <!-- 3. Education Section -->
     <section id="education">
       <div class="container">
-        <div class="section-header">
+        <div class="section-header reveal">
           <h2 class="section-title">Education</h2>
+          <p class="section-subtitle">Academic foundations and background</p>
         </div>
-        
+
         <div class="education-list">
-          <!-- B.E. CSE Entry -->
-          <div class="education-card">
+          <div class="education-card reveal">
             <div>
               <h3 class="edu-degree">B.E. – Computer Science and Engineering</h3>
               <p class="edu-institution">BMS Institute of Technology and Management (BMSIT), Bengaluru</p>
@@ -899,8 +1193,7 @@
             </div>
           </div>
 
-          <!-- 2nd PUC Entry -->
-          <div class="education-card">
+          <div class="education-card reveal">
             <div>
               <h3 class="edu-degree">2nd PUC / 12th Grade</h3>
               <p class="edu-institution">STG Pre-University College</p>
@@ -915,8 +1208,7 @@
             </div>
           </div>
 
-          <!-- 10th SSLC Entry -->
-          <div class="education-card">
+          <div class="education-card reveal">
             <div>
               <h3 class="edu-degree">10th / SSLC</h3>
               <p class="edu-institution">STG Public School</p>
@@ -934,16 +1226,16 @@
       </div>
     </section>
 
-    <!-- 4. Technical Skills Section -->
+    <!-- 4. Interactive Skills Section -->
     <section id="skills">
       <div class="container">
-        <div class="section-header">
+        <div class="section-header reveal">
           <h2 class="section-title">Technical Skills</h2>
-          <p class="section-subtitle">Core concepts and tools I am currently studying and applying through my coursework and projects.</p>
+          <p class="section-subtitle">Technologies and concepts I practice and apply</p>
         </div>
 
         <div class="skills-grid">
-          <div class="skill-card">
+          <div class="skill-card reveal">
             <i class="fa-solid fa-code skill-icon"></i>
             <h3 class="skill-category">Programming</h3>
             <div class="skill-list">
@@ -953,17 +1245,17 @@
             </div>
           </div>
 
-          <div class="skill-card">
+          <div class="skill-card reveal">
             <i class="fa-solid fa-brain skill-icon"></i>
-            <h3 class="skill-category">Computer Science</h3>
+            <h3 class="skill-category">Data Structures & Problem Solving</h3>
             <div class="skill-list">
               <span class="skill-tag">Data Structures</span>
-              <span class="skill-tag">Object-Oriented Programming</span>
+              <span class="skill-tag">OOP Concept</span>
               <span class="skill-tag">Problem Solving</span>
             </div>
           </div>
 
-          <div class="skill-card">
+          <div class="skill-card reveal">
             <i class="fa-solid fa-laptop-code skill-icon"></i>
             <h3 class="skill-category">Web Development</h3>
             <div class="skill-list">
@@ -974,9 +1266,9 @@
             </div>
           </div>
 
-          <div class="skill-card">
+          <div class="skill-card reveal">
             <i class="fa-solid fa-wrench skill-icon"></i>
-            <h3 class="skill-category">Tools & Technologies</h3>
+            <h3 class="skill-category">Tools & Environments</h3>
             <div class="skill-list">
               <span class="skill-tag">Git</span>
               <span class="skill-tag">GitHub</span>
@@ -987,95 +1279,106 @@
       </div>
     </section>
 
-    <!-- 5. Projects Section -->
+    <!-- 5. Unique Projects Section -->
     <section id="projects">
       <div class="container">
-        <div class="section-header">
+        <div class="section-header reveal">
           <h2 class="section-title">Projects</h2>
-          <p class="section-subtitle">Academic and personal hands-on projects developed during my learning process.</p>
+          <p class="section-subtitle">Hands-on practical projects built during my learning process</p>
         </div>
 
         <div class="projects-grid">
-          <div class="project-card">
+          <div class="project-card reveal">
             <div>
-              <span class="project-status-badge">
-                <i class="fa-solid fa-spinner"></i> Learning Project
-              </span>
+              <span class="project-badge"><i class="fa-solid fa-spinner fa-spin"></i> Learning Project</span>
               <h3 class="project-title">Pygame Snake Game</h3>
               <p class="project-description">
-                A simple Snake game developed using Python and Pygame during my learning process. Includes custom difficulty levels and basic game movement logic.
+                A custom Snake game developed using Python and Pygame. Built to practice object movement logic, collision detection algorithms, score tracking, and custom difficulty settings.
               </p>
             </div>
             <div class="project-tags">
-              <span class="badge">Python</span>
-              <span class="badge">Pygame</span>
+              <span class="project-tag">Python</span>
+              <span class="project-tag">Pygame</span>
             </div>
           </div>
 
-          <div class="project-card">
+          <div class="project-card reveal">
             <div>
-              <span class="project-status-badge">
-                <i class="fa-solid fa-spinner"></i> Learning Project
-              </span>
+              <span class="project-badge"><i class="fa-solid fa-spinner fa-spin"></i> Learning Project</span>
               <h3 class="project-title">Market Price Predictor</h3>
               <p class="project-description">
-                A Flask-based web application designed for predicting market prices of commodities such as Tomato, Onion, Potato, Rice, and Wheat. Built as a practical web development exploration project.
+                A Flask-based web application developed to estimate market prices for commodities such as Tomato, Onion, Potato, Rice, and Wheat. Designed as a practical exploration of backend web routing and frontend integration.
               </p>
             </div>
             <div class="project-tags">
-              <span class="badge">Python</span>
-              <span class="badge">Flask</span>
-              <span class="badge">HTML/CSS</span>
+              <span class="project-tag">Python</span>
+              <span class="project-tag">Flask</span>
+              <span class="project-tag">HTML/CSS</span>
             </div>
           </div>
         </div>
       </div>
     </section>
 
-    <!-- 6. What I Am Learning Section -->
-    <section id="learning">
+    <!-- 6. Learning Journey / Roadmap Section -->
+    <section id="journey">
       <div class="container">
-        <div class="section-header">
-          <h2 class="section-title">What I Am Learning</h2>
-          <p class="section-subtitle">Key areas where I am actively building competencies and practicing daily.</p>
+        <div class="section-header reveal">
+          <h2 class="section-title">My Learning Journey</h2>
+          <p class="section-subtitle">Current structured growth path and skill development roadmap</p>
         </div>
 
-        <div class="learning-grid">
-          <div class="learning-item">
-            <i class="fa-solid fa-circle-check"></i>
-            <span>Data Structures & Algorithms</span>
+        <div class="timeline">
+          <div class="timeline-item reveal">
+            <div class="timeline-dot"></div>
+            <div class="timeline-content">
+              <div class="timeline-step">Step 1</div>
+              <div class="timeline-title">C / C++ Fundamentals</div>
+            </div>
           </div>
-          <div class="learning-item">
-            <i class="fa-solid fa-circle-check"></i>
-            <span>C++ Programming</span>
+
+          <div class="timeline-item reveal">
+            <div class="timeline-dot"></div>
+            <div class="timeline-content">
+              <div class="timeline-step">Step 2</div>
+              <div class="timeline-title">Data Structures & Problem Solving</div>
+            </div>
           </div>
-          <div class="learning-item">
-            <i class="fa-solid fa-circle-check"></i>
-            <span>Python</span>
+
+          <div class="timeline-item reveal">
+            <div class="timeline-dot"></div>
+            <div class="timeline-content">
+              <div class="timeline-step">Step 3</div>
+              <div class="timeline-title">Python Programming</div>
+            </div>
           </div>
-          <div class="learning-item">
-            <i class="fa-solid fa-circle-check"></i>
-            <span>Web Development</span>
+
+          <div class="timeline-item reveal">
+            <div class="timeline-dot"></div>
+            <div class="timeline-content">
+              <div class="timeline-step">Step 4</div>
+              <div class="timeline-title">Web Development Basics</div>
+            </div>
           </div>
-          <div class="learning-item">
-            <i class="fa-solid fa-circle-check"></i>
-            <span>Problem Solving</span>
-          </div>
-          <div class="learning-item">
-            <i class="fa-solid fa-circle-check"></i>
-            <span>Building Practical Projects</span>
+
+          <div class="timeline-item reveal">
+            <div class="timeline-dot"></div>
+            <div class="timeline-content">
+              <div class="timeline-step">Step 5</div>
+              <div class="timeline-title">Building Practical Projects</div>
+            </div>
           </div>
         </div>
       </div>
     </section>
 
-    <!-- 7. Career Objective Section -->
+    <!-- 7. Career Objective -->
     <section id="objective">
       <div class="container">
-        <div class="objective-card">
+        <div class="objective-card reveal">
           <h3><i class="fa-solid fa-bullseye"></i> Career Objective</h3>
           <p>
-            My goal is to strengthen my programming and problem-solving skills, gain practical industry experience, and contribute to meaningful software projects while continuously learning new technologies.
+            My goal is to continuously strengthen my core programming and problem-solving skills, gain practical hands-on software development experience through internships, and contribute effectively to meaningful tech projects while learning modern tools and frameworks.
           </p>
         </div>
       </div>
@@ -1084,14 +1387,13 @@
     <!-- 8. Contact Section -->
     <section id="contact">
       <div class="container">
-        <div class="section-header">
+        <div class="section-header reveal">
           <h2 class="section-title">Get In Touch</h2>
-          <p class="section-subtitle">Feel free to connect or send a message directly via email.</p>
+          <p class="section-subtitle">Feel free to reach out directly via message or email</p>
         </div>
 
         <div class="contact-grid">
-          <!-- Actual Contact Info -->
-          <div class="contact-info">
+          <div class="contact-info reveal">
             <div class="contact-item">
               <div class="contact-icon">
                 <i class="fa-solid fa-user"></i>
@@ -1143,8 +1445,8 @@
             </div>
           </div>
 
-          <!-- Functional Contact Form (Formspree Integrated) -->
-          <div class="contact-form-container">
+          <!-- Working Contact Form (Formspree Endpoint Preserved) -->
+          <div class="contact-form-container reveal">
             <form id="contact-form">
               <div class="form-group">
                 <label for="name">Your Name</label>
@@ -1173,7 +1475,12 @@
     </section>
   </main>
 
-  <!-- 9. Footer -->
+  <!-- Floating Back-to-Top Button -->
+  <button id="back-to-top" aria-label="Back to Top">
+    <i class="fa-solid fa-arrow-up"></i>
+  </button>
+
+  <!-- Footer -->
   <footer>
     <div class="container footer-content">
       <div class="footer-socials">
@@ -1188,9 +1495,16 @@
     </div>
   </footer>
 
-  <!-- Script for Navigation and Working Contact Form -->
+  <!-- Embedded Clean JavaScript -->
   <script>
-    // Mobile navigation hamburger toggle
+    // 1. Minimal Preloader Fade Out
+    window.addEventListener('load', () => {
+      const preloader = document.getElementById('preloader');
+      preloader.style.opacity = '0';
+      preloader.style.visibility = 'hidden';
+    });
+
+    // 2. Mobile Navigation Toggle
     const hamburger = document.getElementById('hamburger');
     const navMenu = document.getElementById('nav-menu');
     const navLinks = document.querySelectorAll('.nav-link');
@@ -1205,7 +1519,92 @@
       });
     });
 
-    // Functional AJAX Formspree contact form handler
+    // 3. Dynamic Typewriter Effect
+    const roles = ["Computer Science Student", "Aspiring Software Developer", "Passionate Learner"];
+    let roleIndex = 0;
+    let charIndex = 0;
+    let isDeleting = false;
+    const typewriterElement = document.getElementById('typewriter');
+
+    function typeEffect() {
+      const currentRole = roles[roleIndex];
+      
+      if (isDeleting) {
+        typewriterElement.textContent = currentRole.substring(0, charIndex - 1);
+        charIndex--;
+      } else {
+        typewriterElement.textContent = currentRole.substring(0, charIndex + 1);
+        charIndex++;
+      }
+
+      let typeSpeed = isDeleting ? 40 : 80;
+
+      if (!isDeleting && charIndex === currentRole.length) {
+        typeSpeed = 1800;
+        isDeleting = true;
+      } else if (isDeleting && charIndex === 0) {
+        isDeleting = false;
+        roleIndex = (roleIndex + 1) % roles.length;
+        typeSpeed = 400;
+      }
+
+      setTimeout(typeEffect, typeSpeed);
+    }
+
+    document.addEventListener('DOMContentLoaded', typeEffect);
+
+    // 4. Scroll Reveal Animations & Nav Highlight Observer
+    const revealElements = document.querySelectorAll('.reveal');
+    const sections = document.querySelectorAll('section');
+
+    const revealOnScroll = () => {
+      const windowHeight = window.innerHeight;
+      revealElements.forEach(el => {
+        const elementTop = el.getBoundingClientRect().top;
+        if (elementTop < windowHeight - 80) {
+          el.classList.add('active');
+        }
+      });
+
+      // Navigation Active State Update
+      let currentSection = '';
+      sections.forEach(section => {
+        const sectionTop = section.offsetTop - 100;
+        if (window.scrollY >= sectionTop) {
+          currentSection = section.getAttribute('id');
+        }
+      });
+
+      navLinks.forEach(link => {
+        link.classList.remove('active');
+        if (link.getAttribute('href') === `#${currentSection}`) {
+          link.classList.add('active');
+        }
+      });
+    };
+
+    window.addEventListener('scroll', revealOnScroll);
+    revealOnScroll(); // Initial check
+
+    // 5. Back-to-Top Button Functionality
+    const backToTopBtn = document.getElementById('back-to-top');
+
+    window.addEventListener('scroll', () => {
+      if (window.scrollY > 350) {
+        backToTopBtn.classList.add('visible');
+      } else {
+        backToTopBtn.classList.remove('visible');
+      }
+    });
+
+    backToTopBtn.addEventListener('click', () => {
+      window.scrollTo({
+        top: 0,
+        behavior: 'smooth'
+      });
+    });
+
+    // 6. Formspree Functional AJAX Handler
     const contactForm = document.getElementById('contact-form');
     const submitBtn = document.getElementById('submit-btn');
     const formStatus = document.getElementById('form-status');
@@ -1213,7 +1612,7 @@
     contactForm.addEventListener('submit', async function(e) {
       e.preventDefault();
 
-      // REPLACE "YOUR_FORM_ID" BELOW WITH YOUR ACTUAL FORMSPREE FORM ID
+      // Formspree endpoint explicitly preserved
       const formspreeEndpoint = 'https://formspree.io/f/xppwavkw';
 
       submitBtn.disabled = true;
@@ -1240,7 +1639,7 @@
         }
       } catch (error) {
         formStatus.className = 'form-status error';
-        formStatus.innerHTML = '<i class="fa-solid fa-circle-exclamation"></i> Oops! Something went wrong. Please try again or reach out directly via email.';
+        formStatus.innerHTML = '<i class="fa-solid fa-circle-exclamation"></i> Oops! Something went wrong. Please try again or email directly at nnikhith508@gmail.com.';
       } finally {
         submitBtn.disabled = false;
         submitBtn.innerHTML = '<i class="fa-solid fa-paper-plane"></i> Send Message';
